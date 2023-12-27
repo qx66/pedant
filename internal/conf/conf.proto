@@ -1,0 +1,6 @@
+syntax = "proto3";
+package kratos.api;
+
+option go_package = "pedant/internal/conf;conf";
+
+import "google/protobuf/duration.proto";

@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package pedant;
+
+option go_package = "github.com/qx66/pedant/api/pedant";
+
+import "validate/validate.proto";
+
+service pedant {
+
+}
