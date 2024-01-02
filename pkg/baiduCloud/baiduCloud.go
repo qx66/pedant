@@ -7,6 +7,16 @@ import (
 	"github.com/startopsz/rule/pkg/http"
 )
 
+const (
+	ChatRoleUser      = "user"
+	ChatRoleAssistant = "assistant"
+)
+
+const (
+	stableDiffusionXLImageApi = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/text2image/sd_xl"
+	ernieBotApi               = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/eb-instant"
+)
+
 type AccessToken struct {
 	RefreshToken  string `json:"refresh_token,omitempty"`
 	ExpiresIn     int    `json:"expires_in,omitempty"`
@@ -84,8 +94,7 @@ type ERNIEBotTurboResponseUsage struct {
 
 func SendERNIEBotTurbo(accessToken string, body ERNIEBotTurboReq) (ERNIEBotTurboResponse, error) {
 	var ernieBotResp ERNIEBotTurboResponse
-	baseUrl := "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/eb-instant"
-	url := fmt.Sprintf("%s?access_token=%s", baseUrl, accessToken)
+	url := fmt.Sprintf("%s?access_token=%s", ernieBotApi, accessToken)
 	
 	bodyByte, err := json.Marshal(body)
 	if err != nil {
@@ -124,4 +133,84 @@ func SendERNIEBotTurbo(accessToken string, body ERNIEBotTurboReq) (ERNIEBotTurbo
 	
 	//
 	return ernieBotResp, nil
+}
+
+// https://cloud.baidu.com/doc/WENXINWORKSHOP/s/Klkqubb9w
+
+type StableDiffusionSize string
+type StableDiffusionSamplerIndex string
+
+const (
+	StableDiffusionSize768x768   StableDiffusionSize = "768x768"
+	StableDiffusionSize768x1024  StableDiffusionSize = "768x1024"
+	StableDiffusionSize1024x768  StableDiffusionSize = "1024x768"
+	StableDiffusionSize576x1024  StableDiffusionSize = "576x1024"
+	StableDiffusionSize1024x576  StableDiffusionSize = "1024x576"
+	StableDiffusionSize1024x1024 StableDiffusionSize = "1024x1024"
+	
+	StableDiffusionSamplerIndexEuler       StableDiffusionSamplerIndex = "Euler"
+	StableDiffusionSamplerIndexEulerA      StableDiffusionSamplerIndex = "Euler a"
+	StableDiffusionSamplerIndexDPM2M       StableDiffusionSamplerIndex = "DPM++ 2M"
+	StableDiffusionSamplerIndexDPM2MKarras StableDiffusionSamplerIndex = "DPM++ 2M Karras"
+	StableDiffusionSamplerIndexLMSKarras   StableDiffusionSamplerIndex = "LMS Karras"
+	StableDiffusionSamplerIndexDPMSDE      StableDiffusionSamplerIndex = "DPM++ SDE"
+)
+
+type StableDiffusionXLReq struct {
+	Prompt         string                      `json:"prompt,omitempty"`          // require 提示词，即用户希望图片包含的元素。长度限制为1024字符，建议中文或者英文单词总数量不超过150个
+	NegativePrompt string                      `json:"negative_prompt,omitempty"` // 反向提示词，即用户希望图片不包含的元素。长度限制为1024字符，建议中文或者英文单词总数量不超过150个
+	Size           StableDiffusionSize         `json:"size,omitempty"`            // 生成图片长宽，默认值 1024x1024
+	Steps          int                         `json:"steps,omitempty"`           // 生成图片数量，说明: 默认值为1,取值范围为1-4
+	N              int                         `json:"n,omitempty"`               // 迭代轮次，说明: 默认值为20, 取值范围为10-50
+	SamplerIndex   StableDiffusionSamplerIndex `json:"sampler_index,omitempty"`   // 采样方式，默认值：Euler a
+}
+
+type StableDiffusionXLResponse struct {
+	Id      string                          `json:"id,omitempty"`      // 请求的id
+	Object  string                          `json:"object,omitempty"`  // 回包类型。image：图像生成返回
+	Created int64                           `json:"created,omitempty"` // 时间戳
+	Data    []StableDiffusionXLResponseData `json:"data,omitempty"`    // 生成图片结果
+	Usage   ERNIEBotTurboResponseUsage      `json:"usage,omitempty"`   // oken统计信息
+}
+
+type StableDiffusionXLResponseData struct {
+	Object   string `json:"object,omitempty"`    // 固定值"image"
+	B64Image string `json:"b64_image,omitempty"` // 图片base64编码内容
+	Index    int    `json:"index,omitempty"`     // 序号
+}
+
+func GenerateStableDiffusionXLImage(accessToken string, body StableDiffusionXLReq) (StableDiffusionXLResponse, error) {
+	var response StableDiffusionXLResponse
+	
+	url := fmt.Sprintf("%s?access_token=%s", stableDiffusionXLImageApi, accessToken)
+	
+	bodyByte, err := json.Marshal(body)
+	if err != nil {
+		return response, err
+	}
+	
+	//
+	req := http.Req{
+		Method:  http.Post,
+		Url:     url,
+		Body:    bodyByte,
+		Timeout: 120,
+	}
+	
+	resp, err := req.Do()
+	if err != nil {
+		return response, err
+	}
+	//
+	
+	if resp.StatusCode != 200 {
+		return response, errors.New(
+			fmt.Sprintf("http status: %d, message: %s", resp.StatusCode, string(resp.Body)),
+		)
+	}
+	
+	//
+	err = json.Unmarshal(resp.Body, &response)
+	//
+	return response, err
 }

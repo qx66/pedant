@@ -11,6 +11,7 @@ import (
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	_ "google.golang.org/protobuf/types/known/durationpb"
 	reflect "reflect"
+	sync "sync"
 )
 
 const (
@@ -20,6 +21,462 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type Bootstrap struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Pedant *Pedant `protobuf:"bytes,1,opt,name=pedant,proto3" json:"pedant,omitempty"`
+	Data   *Data   `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
+	Llm    *Llm    `protobuf:"bytes,3,opt,name=llm,proto3" json:"llm,omitempty"`
+}
+
+func (x *Bootstrap) Reset() {
+	*x = Bootstrap{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_internal_conf_conf_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Bootstrap) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Bootstrap) ProtoMessage() {}
+
+func (x *Bootstrap) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_conf_conf_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Bootstrap.ProtoReflect.Descriptor instead.
+func (*Bootstrap) Descriptor() ([]byte, []int) {
+	return file_internal_conf_conf_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *Bootstrap) GetPedant() *Pedant {
+	if x != nil {
+		return x.Pedant
+	}
+	return nil
+}
+
+func (x *Bootstrap) GetData() *Data {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+func (x *Bootstrap) GetLlm() *Llm {
+	if x != nil {
+		return x.Llm
+	}
+	return nil
+}
+
+type Llm struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Openai  *OpenAi  `protobuf:"bytes,1,opt,name=openai,proto3" json:"openai,omitempty"`
+	Gemini  *Gemini  `protobuf:"bytes,2,opt,name=gemini,proto3" json:"gemini,omitempty"`
+	Qianfan *Qianfan `protobuf:"bytes,3,opt,name=qianfan,proto3" json:"qianfan,omitempty"`
+}
+
+func (x *Llm) Reset() {
+	*x = Llm{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_internal_conf_conf_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Llm) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Llm) ProtoMessage() {}
+
+func (x *Llm) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_conf_conf_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Llm.ProtoReflect.Descriptor instead.
+func (*Llm) Descriptor() ([]byte, []int) {
+	return file_internal_conf_conf_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *Llm) GetOpenai() *OpenAi {
+	if x != nil {
+		return x.Openai
+	}
+	return nil
+}
+
+func (x *Llm) GetGemini() *Gemini {
+	if x != nil {
+		return x.Gemini
+	}
+	return nil
+}
+
+func (x *Llm) GetQianfan() *Qianfan {
+	if x != nil {
+		return x.Qianfan
+	}
+	return nil
+}
+
+type Pedant struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Token    string `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	Llm      string `protobuf:"bytes,2,opt,name=llm,proto3" json:"llm,omitempty"` // openai / gemini / qianfan
+	ImageLlm string `protobuf:"bytes,3,opt,name=imageLlm,proto3" json:"imageLlm,omitempty"`
+}
+
+func (x *Pedant) Reset() {
+	*x = Pedant{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_internal_conf_conf_proto_msgTypes[2]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Pedant) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Pedant) ProtoMessage() {}
+
+func (x *Pedant) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_conf_conf_proto_msgTypes[2]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Pedant.ProtoReflect.Descriptor instead.
+func (*Pedant) Descriptor() ([]byte, []int) {
+	return file_internal_conf_conf_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *Pedant) GetToken() string {
+	if x != nil {
+		return x.Token
+	}
+	return ""
+}
+
+func (x *Pedant) GetLlm() string {
+	if x != nil {
+		return x.Llm
+	}
+	return ""
+}
+
+func (x *Pedant) GetImageLlm() string {
+	if x != nil {
+		return x.ImageLlm
+	}
+	return ""
+}
+
+type OpenAi struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ApiKey string `protobuf:"bytes,1,opt,name=apiKey,proto3" json:"apiKey,omitempty"`
+}
+
+func (x *OpenAi) Reset() {
+	*x = OpenAi{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_internal_conf_conf_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OpenAi) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OpenAi) ProtoMessage() {}
+
+func (x *OpenAi) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_conf_conf_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OpenAi.ProtoReflect.Descriptor instead.
+func (*OpenAi) Descriptor() ([]byte, []int) {
+	return file_internal_conf_conf_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *OpenAi) GetApiKey() string {
+	if x != nil {
+		return x.ApiKey
+	}
+	return ""
+}
+
+type Gemini struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ApiKey string `protobuf:"bytes,1,opt,name=apiKey,proto3" json:"apiKey,omitempty"`
+}
+
+func (x *Gemini) Reset() {
+	*x = Gemini{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_internal_conf_conf_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Gemini) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Gemini) ProtoMessage() {}
+
+func (x *Gemini) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_conf_conf_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Gemini.ProtoReflect.Descriptor instead.
+func (*Gemini) Descriptor() ([]byte, []int) {
+	return file_internal_conf_conf_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *Gemini) GetApiKey() string {
+	if x != nil {
+		return x.ApiKey
+	}
+	return ""
+}
+
+type Qianfan struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ApiKey    string `protobuf:"bytes,1,opt,name=apiKey,proto3" json:"apiKey,omitempty"`
+	SecretKey string `protobuf:"bytes,2,opt,name=secretKey,proto3" json:"secretKey,omitempty"`
+}
+
+func (x *Qianfan) Reset() {
+	*x = Qianfan{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_internal_conf_conf_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Qianfan) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Qianfan) ProtoMessage() {}
+
+func (x *Qianfan) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_conf_conf_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Qianfan.ProtoReflect.Descriptor instead.
+func (*Qianfan) Descriptor() ([]byte, []int) {
+	return file_internal_conf_conf_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *Qianfan) GetApiKey() string {
+	if x != nil {
+		return x.ApiKey
+	}
+	return ""
+}
+
+func (x *Qianfan) GetSecretKey() string {
+	if x != nil {
+		return x.SecretKey
+	}
+	return ""
+}
+
+type Data struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Database *Data_Database `protobuf:"bytes,1,opt,name=database,proto3" json:"database,omitempty"`
+}
+
+func (x *Data) Reset() {
+	*x = Data{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_internal_conf_conf_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Data) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Data) ProtoMessage() {}
+
+func (x *Data) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_conf_conf_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Data.ProtoReflect.Descriptor instead.
+func (*Data) Descriptor() ([]byte, []int) {
+	return file_internal_conf_conf_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *Data) GetDatabase() *Data_Database {
+	if x != nil {
+		return x.Database
+	}
+	return nil
+}
+
+type Data_Database struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Driver       string `protobuf:"bytes,1,opt,name=driver,proto3" json:"driver,omitempty"`
+	Source       string `protobuf:"bytes,2,opt,name=source,proto3" json:"source,omitempty"`
+	MaxIdleConns int32  `protobuf:"varint,3,opt,name=maxIdleConns,proto3" json:"maxIdleConns,omitempty"`
+	MaxOpenConns int32  `protobuf:"varint,4,opt,name=maxOpenConns,proto3" json:"maxOpenConns,omitempty"`
+}
+
+func (x *Data_Database) Reset() {
+	*x = Data_Database{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_internal_conf_conf_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Data_Database) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Data_Database) ProtoMessage() {}
+
+func (x *Data_Database) ProtoReflect() protoreflect.Message {
+	mi := &file_internal_conf_conf_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Data_Database.ProtoReflect.Descriptor instead.
+func (*Data_Database) Descriptor() ([]byte, []int) {
+	return file_internal_conf_conf_proto_rawDescGZIP(), []int{6, 0}
+}
+
+func (x *Data_Database) GetDriver() string {
+	if x != nil {
+		return x.Driver
+	}
+	return ""
+}
+
+func (x *Data_Database) GetSource() string {
+	if x != nil {
+		return x.Source
+	}
+	return ""
+}
+
+func (x *Data_Database) GetMaxIdleConns() int32 {
+	if x != nil {
+		return x.MaxIdleConns
+	}
+	return 0
+}
+
+func (x *Data_Database) GetMaxOpenConns() int32 {
+	if x != nil {
+		return x.MaxOpenConns
+	}
+	return 0
+}
+
 var File_internal_conf_conf_proto protoreflect.FileDescriptor
 
 var file_internal_conf_conf_proto_rawDesc = []byte{
@@ -27,18 +484,90 @@ var file_internal_conf_conf_proto_rawDesc = []byte{
 	0x63, 0x6f, 0x6e, 0x66, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x0a, 0x6b, 0x72, 0x61, 0x74,
 	0x6f, 0x73, 0x2e, 0x61, 0x70, 0x69, 0x1a, 0x1e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70,
 	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x64, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
-	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x42, 0x1b, 0x5a, 0x19, 0x70, 0x65, 0x64, 0x61, 0x6e, 0x74,
-	0x2f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x6e, 0x61, 0x6c, 0x2f, 0x63, 0x6f, 0x6e, 0x66, 0x3b, 0x63,
-	0x6f, 0x6e, 0x66, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x80, 0x01, 0x0a, 0x09, 0x42, 0x6f, 0x6f, 0x74, 0x73,
+	0x74, 0x72, 0x61, 0x70, 0x12, 0x2a, 0x0a, 0x06, 0x70, 0x65, 0x64, 0x61, 0x6e, 0x74, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x6b, 0x72, 0x61, 0x74, 0x6f, 0x73, 0x2e, 0x61, 0x70,
+	0x69, 0x2e, 0x50, 0x65, 0x64, 0x61, 0x6e, 0x74, 0x52, 0x06, 0x70, 0x65, 0x64, 0x61, 0x6e, 0x74,
+	0x12, 0x24, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x10,
+	0x2e, 0x6b, 0x72, 0x61, 0x74, 0x6f, 0x73, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x44, 0x61, 0x74, 0x61,
+	0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x12, 0x21, 0x0a, 0x03, 0x6c, 0x6c, 0x6d, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x0f, 0x2e, 0x6b, 0x72, 0x61, 0x74, 0x6f, 0x73, 0x2e, 0x61, 0x70, 0x69,
+	0x2e, 0x4c, 0x6c, 0x6d, 0x52, 0x03, 0x6c, 0x6c, 0x6d, 0x22, 0x8c, 0x01, 0x0a, 0x03, 0x4c, 0x6c,
+	0x6d, 0x12, 0x2a, 0x0a, 0x06, 0x6f, 0x70, 0x65, 0x6e, 0x61, 0x69, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x12, 0x2e, 0x6b, 0x72, 0x61, 0x74, 0x6f, 0x73, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x4f,
+	0x70, 0x65, 0x6e, 0x41, 0x69, 0x52, 0x06, 0x6f, 0x70, 0x65, 0x6e, 0x61, 0x69, 0x12, 0x2a, 0x0a,
+	0x06, 0x67, 0x65, 0x6d, 0x69, 0x6e, 0x69, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e,
+	0x6b, 0x72, 0x61, 0x74, 0x6f, 0x73, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x47, 0x65, 0x6d, 0x69, 0x6e,
+	0x69, 0x52, 0x06, 0x67, 0x65, 0x6d, 0x69, 0x6e, 0x69, 0x12, 0x2d, 0x0a, 0x07, 0x71, 0x69, 0x61,
+	0x6e, 0x66, 0x61, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x13, 0x2e, 0x6b, 0x72, 0x61,
+	0x74, 0x6f, 0x73, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x51, 0x69, 0x61, 0x6e, 0x66, 0x61, 0x6e, 0x52,
+	0x07, 0x71, 0x69, 0x61, 0x6e, 0x66, 0x61, 0x6e, 0x22, 0x4c, 0x0a, 0x06, 0x50, 0x65, 0x64, 0x61,
+	0x6e, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x05, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x12, 0x10, 0x0a, 0x03, 0x6c, 0x6c, 0x6d, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6c, 0x6c, 0x6d, 0x12, 0x1a, 0x0a, 0x08, 0x69, 0x6d,
+	0x61, 0x67, 0x65, 0x4c, 0x6c, 0x6d, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x69, 0x6d,
+	0x61, 0x67, 0x65, 0x4c, 0x6c, 0x6d, 0x22, 0x20, 0x0a, 0x06, 0x4f, 0x70, 0x65, 0x6e, 0x41, 0x69,
+	0x12, 0x16, 0x0a, 0x06, 0x61, 0x70, 0x69, 0x4b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x06, 0x61, 0x70, 0x69, 0x4b, 0x65, 0x79, 0x22, 0x20, 0x0a, 0x06, 0x47, 0x65, 0x6d, 0x69,
+	0x6e, 0x69, 0x12, 0x16, 0x0a, 0x06, 0x61, 0x70, 0x69, 0x4b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x06, 0x61, 0x70, 0x69, 0x4b, 0x65, 0x79, 0x22, 0x3f, 0x0a, 0x07, 0x51, 0x69,
+	0x61, 0x6e, 0x66, 0x61, 0x6e, 0x12, 0x16, 0x0a, 0x06, 0x61, 0x70, 0x69, 0x4b, 0x65, 0x79, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x61, 0x70, 0x69, 0x4b, 0x65, 0x79, 0x12, 0x1c, 0x0a,
+	0x09, 0x73, 0x65, 0x63, 0x72, 0x65, 0x74, 0x4b, 0x65, 0x79, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x73, 0x65, 0x63, 0x72, 0x65, 0x74, 0x4b, 0x65, 0x79, 0x22, 0xc2, 0x01, 0x0a, 0x04,
+	0x44, 0x61, 0x74, 0x61, 0x12, 0x35, 0x0a, 0x08, 0x64, 0x61, 0x74, 0x61, 0x62, 0x61, 0x73, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x6b, 0x72, 0x61, 0x74, 0x6f, 0x73, 0x2e,
+	0x61, 0x70, 0x69, 0x2e, 0x44, 0x61, 0x74, 0x61, 0x2e, 0x44, 0x61, 0x74, 0x61, 0x62, 0x61, 0x73,
+	0x65, 0x52, 0x08, 0x64, 0x61, 0x74, 0x61, 0x62, 0x61, 0x73, 0x65, 0x1a, 0x82, 0x01, 0x0a, 0x08,
+	0x44, 0x61, 0x74, 0x61, 0x62, 0x61, 0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x64, 0x72, 0x69, 0x76,
+	0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x64, 0x72, 0x69, 0x76, 0x65, 0x72,
+	0x12, 0x16, 0x0a, 0x06, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x06, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x12, 0x22, 0x0a, 0x0c, 0x6d, 0x61, 0x78, 0x49,
+	0x64, 0x6c, 0x65, 0x43, 0x6f, 0x6e, 0x6e, 0x73, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0c,
+	0x6d, 0x61, 0x78, 0x49, 0x64, 0x6c, 0x65, 0x43, 0x6f, 0x6e, 0x6e, 0x73, 0x12, 0x22, 0x0a, 0x0c,
+	0x6d, 0x61, 0x78, 0x4f, 0x70, 0x65, 0x6e, 0x43, 0x6f, 0x6e, 0x6e, 0x73, 0x18, 0x04, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x0c, 0x6d, 0x61, 0x78, 0x4f, 0x70, 0x65, 0x6e, 0x43, 0x6f, 0x6e, 0x6e, 0x73,
+	0x42, 0x1b, 0x5a, 0x19, 0x70, 0x65, 0x64, 0x61, 0x6e, 0x74, 0x2f, 0x69, 0x6e, 0x74, 0x65, 0x72,
+	0x6e, 0x61, 0x6c, 0x2f, 0x63, 0x6f, 0x6e, 0x66, 0x3b, 0x63, 0x6f, 0x6e, 0x66, 0x62, 0x06, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
-var file_internal_conf_conf_proto_goTypes = []interface{}{}
+var (
+	file_internal_conf_conf_proto_rawDescOnce sync.Once
+	file_internal_conf_conf_proto_rawDescData = file_internal_conf_conf_proto_rawDesc
+)
+
+func file_internal_conf_conf_proto_rawDescGZIP() []byte {
+	file_internal_conf_conf_proto_rawDescOnce.Do(func() {
+		file_internal_conf_conf_proto_rawDescData = protoimpl.X.CompressGZIP(file_internal_conf_conf_proto_rawDescData)
+	})
+	return file_internal_conf_conf_proto_rawDescData
+}
+
+var file_internal_conf_conf_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_internal_conf_conf_proto_goTypes = []interface{}{
+	(*Bootstrap)(nil),     // 0: kratos.api.Bootstrap
+	(*Llm)(nil),           // 1: kratos.api.Llm
+	(*Pedant)(nil),        // 2: kratos.api.Pedant
+	(*OpenAi)(nil),        // 3: kratos.api.OpenAi
+	(*Gemini)(nil),        // 4: kratos.api.Gemini
+	(*Qianfan)(nil),       // 5: kratos.api.Qianfan
+	(*Data)(nil),          // 6: kratos.api.Data
+	(*Data_Database)(nil), // 7: kratos.api.Data.Database
+}
 var file_internal_conf_conf_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	2, // 0: kratos.api.Bootstrap.pedant:type_name -> kratos.api.Pedant
+	6, // 1: kratos.api.Bootstrap.data:type_name -> kratos.api.Data
+	1, // 2: kratos.api.Bootstrap.llm:type_name -> kratos.api.Llm
+	3, // 3: kratos.api.Llm.openai:type_name -> kratos.api.OpenAi
+	4, // 4: kratos.api.Llm.gemini:type_name -> kratos.api.Gemini
+	5, // 5: kratos.api.Llm.qianfan:type_name -> kratos.api.Qianfan
+	7, // 6: kratos.api.Data.database:type_name -> kratos.api.Data.Database
+	7, // [7:7] is the sub-list for method output_type
+	7, // [7:7] is the sub-list for method input_type
+	7, // [7:7] is the sub-list for extension type_name
+	7, // [7:7] is the sub-list for extension extendee
+	0, // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_internal_conf_conf_proto_init() }
@@ -46,18 +575,117 @@ func file_internal_conf_conf_proto_init() {
 	if File_internal_conf_conf_proto != nil {
 		return
 	}
+	if !protoimpl.UnsafeEnabled {
+		file_internal_conf_conf_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Bootstrap); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_internal_conf_conf_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Llm); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_internal_conf_conf_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Pedant); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_internal_conf_conf_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OpenAi); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_internal_conf_conf_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Gemini); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_internal_conf_conf_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Qianfan); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_internal_conf_conf_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Data); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_internal_conf_conf_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*Data_Database); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_internal_conf_conf_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   0,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_internal_conf_conf_proto_goTypes,
 		DependencyIndexes: file_internal_conf_conf_proto_depIdxs,
+		MessageInfos:      file_internal_conf_conf_proto_msgTypes,
 	}.Build()
 	File_internal_conf_conf_proto = out.File
 	file_internal_conf_conf_proto_rawDesc = nil

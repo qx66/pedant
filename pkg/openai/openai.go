@@ -43,13 +43,13 @@ const (
 )
 
 const (
-	ChatSystemRole    = "system"
-	ChatUserRole      = "user"
-	ChatAssistantRole = "assistant"
-	ChatModule        = "gpt-4"
-	// gpt-3.5-turbo-0301
-	// gpt-4-32k
-	// gpt-4
+	ChatRoleSystem    = "system"
+	ChatRoleUser      = "user"
+	ChatRoleAssistant = "assistant"
+	
+	ChatModuleGpt4       = "gpt-4"
+	ChatModuleGpt35Turbo = "gpt-3.5-turbo-0301"
+	ChatModuleGpt432K    = "gpt-4-32k"
 )
 
 type ChatModuleResponse struct {

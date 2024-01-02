@@ -13,6 +13,12 @@ const (
 	Api = "https://generativelanguage.googleapis.com/v1beta/models/"
 )
 
+const (
+	ChatRoleUser      = "user"
+	ChatRoleAssistant = "ASSISTANT"
+	ChatRoleModel     = "model"
+)
+
 type Contents struct {
 	Contents []Content `json:"contents,omitempty"`
 }
@@ -35,6 +41,8 @@ type ContentImg struct {
 	Data     string `json:"data,omitempty"` // image base64
 }
 
+// https://cloud.google.com/vertex-ai/docs/generative-ai/model-reference/gemini?hl=zh-cn#gemini-pro
+
 type Response struct {
 	Candidates     []Candidates   `json:"candidates,omitempty"`
 	PromptFeedback PromptFeedback `json:"promptFeedback,omitempty"`
@@ -42,7 +50,7 @@ type Response struct {
 
 type Candidates struct {
 	Content       CandidatesContent                `json:"content,omitempty"`
-	FinishReason  string                           `json:"finishReason,omitempty"`
+	FinishReason  string                           `json:"finishReason,omitempty"` // 模型停止生成词元的原因。如果为空，则模型尚未停止生成词元。
 	Index         int                              `json:"index,omitempty"`
 	SafetyRatings []CandidatesContentSafetyRatings `json:"safetyRatings,omitempty"`
 }
@@ -113,6 +121,65 @@ func (apiKey ApiKey) Text(text string) (Response, error) {
 }
 
 // 经过测试，imagePaths 建议只传一张图片，多张图片测试效果不是很好
+
+func (apiKey ApiKey) MultiModal(text string, imageBase64 ...string) (Response, error) {
+	var response Response
+	
+	//
+	var parts []interface{}
+	parts = append(parts, ContentText{
+		Text: text,
+	})
+	
+	//
+	for _, i := range imageBase64 {
+		parts = append(parts, ContentInlineData{
+			InlineData: ContentImg{
+				MimeType: "image/jpeg",
+				Data:     i,
+			},
+		})
+	}
+	
+	//
+	contents := Contents{
+		Contents: []Content{
+			{
+				Parts: parts,
+			},
+		},
+	}
+	
+	contentsByte, err := json.Marshal(contents)
+	if err != nil {
+		return response, err
+	}
+	
+	realUrl := fmt.Sprintf("%s%s:generateContent?key=%s", Api, "gemini-pro-vision", apiKey)
+	
+	header := make(map[string]string)
+	header["Content-Type"] = "application/json"
+	
+	req := http.Req{
+		Method:  http.Post,
+		Url:     realUrl,
+		Body:    contentsByte,
+		Headers: header,
+		Timeout: 60,
+	}
+	
+	resp, err := req.Do()
+	if err != nil {
+		return response, err
+	}
+	
+	if resp.StatusCode != 200 {
+		return response, errors.New(fmt.Sprintf("status: %d, body: %s", resp.StatusCode, string(resp.Body)))
+	}
+	
+	err = json.Unmarshal(resp.Body, &response)
+	return response, err
+}
 
 func (apiKey ApiKey) TextAndImage(text string, imagePaths ...string) (Response, error) {
 	var response Response

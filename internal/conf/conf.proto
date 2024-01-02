@@ -4,3 +4,46 @@ package kratos.api;
 option go_package = "pedant/internal/conf;conf";
 
 import "google/protobuf/duration.proto";
+
+message Bootstrap {
+  Pedant pedant = 1;
+  Data data = 2;
+  Llm llm = 3;
+}
+
+message Llm {
+  OpenAi openai = 1;
+  Gemini gemini = 2;
+  Qianfan qianfan = 3;
+}
+
+message Pedant {
+  string token = 1;
+  string llm = 2; // openai / gemini / qianfan
+  string imageLlm = 3;
+}
+
+
+message OpenAi {
+  string apiKey = 1;
+}
+
+message Gemini {
+  string apiKey = 1;
+}
+
+message Qianfan {
+  string apiKey = 1;
+  string secretKey = 2;
+}
+
+message Data {
+  message Database {
+    string driver = 1;
+    string source = 2;
+    int32 maxIdleConns = 3;
+    int32 maxOpenConns = 4;
+  }
+
+  Database database = 1;
+}

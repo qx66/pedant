@@ -1,0 +1,22 @@
+pedant:
+  token: "111111111"
+  llm: "gemini"# ernieBot / gemini / openai
+  imagellm: "ernieBot"
+
+
+data:
+  database:
+    driver: mysql
+    source: ${user}:${passwd}@tcp(${host}:${port})/${db}?charset=utf8mb4&parseTime=True&loc=Local
+    maxIdleConns: 10
+    maxOpenConns: 10
+
+llm:
+  openai:
+    apikey: ""
+  gemini:
+    apikey: ""
+  qianfan:
+    apikey: ""
+    secretkey: ""
+
