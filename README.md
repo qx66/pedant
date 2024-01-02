@@ -6,6 +6,14 @@ pedant是一个对接大模型语言的，提供Rest Api接口的模块
 
 如果其他模块需要直接快速的原生的使用大模型语言，可以直接倒入使用。(聚合仓库的作用)
 
+## 初始化数据库
+
+本模块使用MySQL数据库进行存储数据
+
+[init.sql](docs%2Finit.sql)
+
+下载 init.sql，将创建表语句复制执行即可
+
 ## Api参考
 
 [pedant.postman_collection.json](docs%2Fpedant.postman_collection.json)
