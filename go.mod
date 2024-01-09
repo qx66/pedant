@@ -1,6 +1,6 @@
 module github.com/StartOpsz/pedant
 
-go 1.21.5
+go 1.21
 
 require (
 	github.com/allegro/bigcache/v3 v3.1.0
