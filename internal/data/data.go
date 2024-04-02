@@ -2,7 +2,7 @@ package data
 
 import (
 	"context"
-	"github.com/StartOpsz/pedant/internal/conf"
+	"github.com/qx66/pedant/internal/conf"
 	"github.com/allegro/bigcache/v3"
 	"github.com/google/wire"
 	"go.uber.org/zap"

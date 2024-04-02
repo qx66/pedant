@@ -1,6 +1,6 @@
 package data
 
-import "github.com/StartOpsz/pedant/internal/biz"
+import "github.com/qx66/pedant/internal/biz"
 
 type localCacheDataSource struct {
 	data *Data

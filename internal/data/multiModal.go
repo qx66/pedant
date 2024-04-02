@@ -2,7 +2,7 @@ package data
 
 import (
 	"context"
-	"github.com/StartOpsz/pedant/internal/biz"
+	"github.com/qx66/pedant/internal/biz"
 )
 
 type multiModalDataSource struct {

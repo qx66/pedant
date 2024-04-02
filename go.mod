@@ -1,4 +1,4 @@
-module github.com/StartOpsz/pedant
+module github.com/qx66/pedant
 
 go 1.21
 

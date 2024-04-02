@@ -2,11 +2,11 @@ package biz
 
 import (
 	"context"
-	"github.com/StartOpsz/pedant/internal/biz/common"
-	"github.com/StartOpsz/pedant/internal/conf"
-	"github.com/StartOpsz/pedant/pkg/baiduCloud"
-	"github.com/StartOpsz/pedant/pkg/gemini"
-	"github.com/StartOpsz/pedant/pkg/openai"
+	"github.com/qx66/pedant/internal/biz/common"
+	"github.com/qx66/pedant/internal/conf"
+	"github.com/qx66/pedant/pkg/baiduCloud"
+	"github.com/qx66/pedant/pkg/gemini"
+	"github.com/qx66/pedant/pkg/openai"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/startopsz/rule/pkg/response/errCode"
