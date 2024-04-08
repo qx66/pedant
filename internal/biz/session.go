@@ -2,13 +2,13 @@ package biz
 
 import (
 	"context"
+	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"github.com/qx66/pedant/internal/biz/common"
 	"github.com/qx66/pedant/internal/conf"
 	"github.com/qx66/pedant/pkg/baiduCloud"
 	"github.com/qx66/pedant/pkg/gemini"
 	"github.com/qx66/pedant/pkg/openai"
-	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 	"github.com/startopsz/rule/pkg/response/errCode"
 	"go.uber.org/zap"
 	"time"
@@ -226,6 +226,12 @@ func (sessionUseCase *SessionUseCase) CreateSessionContext(c *gin.Context) {
 	case OpenAILLM:
 		apiKey := sessionUseCase.llm.Openai.ApiKey
 		body := generateOpenAiContext(contexts)
+		
+		body.Messages = append(body.Messages, openai.GptTurbo0301Message{
+			Role:    "user",
+			Content: req.Content,
+		})
+		
 		resp, err := openai.SendChat(body, apiKey)
 		if err != nil {
 			sessionUseCase.logger.Error("请求OpenAi API失败", zap.Error(err))

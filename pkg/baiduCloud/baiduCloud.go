@@ -27,6 +27,7 @@ type AccessToken struct {
 }
 
 // 获取百度千帆调用接口的 AccessToken
+// access_token默认有效期30天，单位是秒，生产环境注意及时刷新。
 
 func GetQianFanAccessToken(apiKey, secretKey string) (AccessToken, error) {
 	var accessToken AccessToken
