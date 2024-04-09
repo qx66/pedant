@@ -15,6 +15,7 @@ const (
 const (
 	stableDiffusionXLImageApi = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/text2image/sd_xl"
 	ernieBotApi               = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/eb-instant"
+	ernieBot4Api              = "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/completions_pro"
 )
 
 type AccessToken struct {
@@ -62,6 +63,8 @@ func GetQianFanAccessToken(apiKey, secretKey string) (AccessToken, error) {
 type ERNIEBotTurboReq struct {
 	Messages []ERNIEBotTurboMessage `json:"messages,omitempty"`
 	Stream   bool                   `json:"stream,omitempty"` // 默认false
+	System   string                 `json:"system,omitempty"`
+	UserId   string                 `json:"user_id,omitempty"`
 	//Temperature  float32                `json:"temperature,omitempty"`   // 默认0.95，范围 (0, 1.0]，不能为0, 建议top_p和temperature不要同时更改
 	//TopP         float32                `json:"top_p,omitempty"`         // 默认0.8，取值范围 [0, 1.0], 建议top_p和temperature不要同时更改
 	//PenaltyScore bool                   `json:"penalty_score,omitempty"` // 通过对已生成的token增加惩罚，减少重复生成的现象。 默认1.0，取值范围：[1.0, 2.0]
@@ -71,6 +74,7 @@ type ERNIEBotTurboReq struct {
 type ERNIEBotTurboMessage struct {
 	Role    string `json:"role,omitempty"`
 	Content string `json:"content,omitempty"`
+	Name    string `json:"name,omitempty"`
 }
 
 type ERNIEBotTurboResponse struct {
@@ -95,7 +99,7 @@ type ERNIEBotTurboResponseUsage struct {
 
 func SendERNIEBotTurbo(accessToken string, body ERNIEBotTurboReq) (ERNIEBotTurboResponse, error) {
 	var ernieBotResp ERNIEBotTurboResponse
-	url := fmt.Sprintf("%s?access_token=%s", ernieBotApi, accessToken)
+	url := fmt.Sprintf("%s?access_token=%s", ernieBot4Api, accessToken)
 	
 	bodyByte, err := json.Marshal(body)
 	if err != nil {
