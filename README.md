@@ -30,6 +30,10 @@ pedant是一个对接大模型语言的，提供Rest Api接口的模块
 
 [飞桨应用](https://aistudio.baidu.com/index/creations/application)
 
+## 火山引擎
+
+[火山引擎](https://www.volcengine.com/docs/82379/1319853)
+
 ## Google Gemini AI
 
 [GoogleGemini](https://makersuite.google.com/app/prompts/new_freeform)

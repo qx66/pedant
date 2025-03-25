@@ -33,8 +33,17 @@ message Gemini {
 }
 
 message Qianfan {
-  string apiKey = 1;
-  string secretKey = 2;
+    QianfanApp app = 1;
+    QianfanAppApiKey apikey = 2;
+}
+message QianfanApp {
+  string appId = 1;
+  string apiKey = 2;
+  string secretKey = 3;
+}
+message QianfanAppApiKey {
+  string appId = 1;
+  string apiKey = 2;
 }
 
 message Data {
